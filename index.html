@@ -1,6 +1,122 @@
+<html lang="en">
+
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>1 billion seconds birthday</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 50px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #444;
+        }
+
+        #output {
+            display: block;
+            text-align: center;
+            color: #333;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+    </style>
 
 </head>
+
 <body>
-    <h1>Omri is dummmm</h1>
+    <h1>When's my Billion Seconds Birthday?</h1>
+    <span>Just a click away</span>
+    <div>
+        <input type="date" id="birthday" title="brithday" value="1992-10-06" min="1900-01-01" />
+    </div>
+    <div>
+        <button id="calculate">Calculate</button>
+    </div>
+    <div id="output">
+        <span type="text" id="1bil" />
+    </div>
+    <div id="countdown"></div>
+
+    <script type="text/javascript">
+
+        let countdownInterval = null;
+
+        document.getElementById("calculate").addEventListener("click", function () {
+            let date = new Date(document.getElementById("birthday").value);
+            const billionSecondsInMilliseconds = 1e9 * 1000;
+            date.setTime(date.getTime() + billionSecondsInMilliseconds);
+            console.log("happy birthday " + date);
+            document.getElementById("1bil").innerHTML = date.toDateString() +
+                " <br>  Happy 1 billion seconds day!";
+            // add a countdown timer
+
+            // Get the countdown element
+            let countdown = document.getElementById("countdown");
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+
+            // Update the countdown every second
+            countdownInterval = setInterval(function () {
+                // Get the current time
+                let now = new Date().getTime();
+
+                // Find the distance between now and the billion seconds birthday
+                let distance = date.getTime() - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result in the countdown element
+                countdown.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                // If the countdown is finished, write some text
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    countdown.innerHTML = "Happy 1 billion seconds day!";
+                }
+            }, 1000);
+        });
+
+        // const
+        //     keys = urlParams.keys(),
+        //     values = urlParams.values(),
+        //     entries = urlParams.entries();
+
+
+    </script>
 </body>
+
+</html>
